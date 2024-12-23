@@ -25,11 +25,9 @@ public class App{
 
                 quotes.add(new Quote(id++,text,author));
                 System.out.println(id-1+"번 명언이 등록되었습니다");
-            }
-            else if (command.equals("종료")) {
+            } else if (command.equals("종료")) {
                 break;
-            }
-            else if (command.equals("목록")) {
+            } else if (command.equals("목록")) {
                 if(quotes.isEmpty()){
                     System.out.println("등록된 명언이 없음");
                 }else {
@@ -38,8 +36,21 @@ public class App{
                         System.out.println(quote.toString());
                     }
                 }
+            } else if(command.startsWith("삭제?id=")){
+                int id=Integer.parseInt(command.substring(6));
+                boolean removed=false;
+                for(int i=0;i<quotes.size();i++){
+                    if(id==quotes.get(i).getId()){
+                        quotes.remove(i);
+                        System.out.println((id+"번 명언이 삭제되었습니다."));
+                        removed=true;
+                        break;
+                    }
+
+                }
+
             }
         }
-
+        scanner.close();
     }
 }

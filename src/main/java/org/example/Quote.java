@@ -18,4 +18,7 @@ public class Quote {
                 author;
     }
 
+    public int getId() {
+        return id;
+    }
 }
