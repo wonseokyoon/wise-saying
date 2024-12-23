@@ -13,9 +13,9 @@ public class Quote {
 
     @Override
     public String toString(){
-        return id+ "번 "
-                +"명언 " + text
-                + "\n작가: "+ author;
+        return id + " / "+
+                text + " / "+
+                author;
     }
 
 }
