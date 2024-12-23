@@ -38,16 +38,15 @@ public class App{
                 }
             } else if(command.startsWith("삭제?id=")){
                 int id=Integer.parseInt(command.substring(6));
-                boolean removed=false;
                 for(int i=0;i<quotes.size();i++){
-                    if(id==quotes.get(i).getId()){
+                    if(id==quotes.get(i).getId()) {
                         quotes.remove(i);
-                        System.out.println((id+"번 명언이 삭제되었습니다."));
-                        removed=true;
-                        break;
+                        System.out.println((id + "번 명언이 삭제되었습니다."));
+                        return;
                     }
-
                 }
+                // 일치하는 번호 없을 경우 도달
+                System.out.println(id+"번 명언은 존재하지 않습니다");
 
             }
         }
