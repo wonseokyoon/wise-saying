@@ -23,14 +23,8 @@ public class App{
             } else if (command.equals("종료")) {
                 break;
             } else if (command.equals("목록")) {
-                if (quotes.isEmpty()) {
-                    System.out.println("등록된 명언이 없음");
-                } else {
-                    System.out.println("========================");
-                    for (Quote quote : quotes) {
-                        System.out.println(quote.toString());
-                    }
-                }
+                ListQuote listQuote=new ListQuote(quotes);
+                listQuote.start();
             } else if (command.startsWith("삭제?id=")) {
                 int id = Integer.parseInt(command.substring(6));
                 Delete delete=new Delete(quotes);
