@@ -21,4 +21,18 @@ public class Quote {
     public int getId() {
         return id;
     }
+    public void setText(String text){
+        this.text=text;
+    }
+    public void setAuthor(String author){
+        this.author=author;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
 }
