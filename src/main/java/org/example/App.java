@@ -17,14 +17,9 @@ public class App{
             String command = scanner.nextLine().trim();
 
             if (command.equals("등록")) {
-                System.out.print("명언: ");
-                String text = scanner.nextLine().trim();
-
-                System.out.print("작가: ");
-                String author = scanner.nextLine().trim();
-
-                quotes.add(new Quote(id++, text, author));
-                System.out.println(id - 1 + "번 명언이 등록되었습니다");
+                Register register=new Register(quotes);
+                register.start(id);
+                id++;
             } else if (command.equals("종료")) {
                 break;
             } else if (command.equals("목록")) {
