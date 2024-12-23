@@ -60,9 +60,10 @@ public class App{
                         System.out.print("작가 : ");
                         String newAuthor= scanner.nextLine();
                         quotes.get(i).setAuthor(newAuthor);
+                        return;
                     }
                 }
-
+                System.out.println(id+"번 명언은 존재하지 않습니다");
             }
 
 
