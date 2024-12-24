@@ -1,9 +1,14 @@
 package org.example;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,6 +19,7 @@ public class App{
     private static final String path="db/wiseSaying";
 
     public void run(){
+        loadFile(); //파일 로드
         Scanner scanner=new Scanner(System.in);
         while(true) {
             System.out.println("==명언 앱==");
@@ -43,6 +49,33 @@ public class App{
             }
         }
         scanner.close();
+    }
+
+    private void loadFile() {
+        File folder=new File(path);   // 경로가 path인 폴더
+        File[] files=folder.listFiles();    //folder의 file리스트
+        if(files!=null){
+            for(File file:files){
+                if(file.getName().endsWith(".json")){
+                    try{
+                        String contents=new String(Files.readAllBytes(file.toPath()));
+                        JSONObject json=new JSONObject(contents);
+
+                        int nextId= json.getInt("id");
+                        String text=json.getString("text");
+                        String author=json.getString("author");
+
+                        quotes.add(new Quote(nextId,text,author));
+                        id=Math.max(id,nextId+1);
+                    }catch (IOException e){
+                        System.out.println("파일 로드 실패"+e.getMessage());
+                    }catch (JSONException e){
+                        System.out.println("Json 오류"+e.getMessage());
+                    }
+                }
+            }
+        }
+
     }
 
     private void saveLastId(int id) {   //마지막 id 저장
