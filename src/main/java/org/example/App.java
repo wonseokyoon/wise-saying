@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -47,10 +48,16 @@ public class App{
             } else if (command.startsWith("수정?id=")) {
                 int id = Integer.parseInt(command.substring(6));
                 Modify modify = new Modify(quotes);
-                modify.start(id);
+                Quote modified=modify.start(id);
+                modifyFile(modified);
             }
         }
         scanner.close();
+    }
+
+    private void modifyFile(Quote quote) {
+        deleteFile(quote.getId());  //삭제
+        saveFile(quote);    //재생성
     }
 
     private void deleteFile(int deleteId) {
