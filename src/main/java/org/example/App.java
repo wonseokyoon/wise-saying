@@ -31,8 +31,8 @@ public class App{
             if (command.equals("등록")) {
                 Register register=new Register(quotes);
                 register.start(lastId,path);
-//                Quote newQuote=quotes.get(quotes.size()-1); //등록한 quote를 새로운 객체에 저장
-//                saveFile(newQuote);
+                Quote newQuote=quotes.get(quotes.size()-1); //등록한 quote를 새로운 객체에 저장
+                saveFile(newQuote);
                 saveLastId(lastId);
                 lastId++;
             } else if (command.equals("종료")) {
@@ -50,6 +50,8 @@ public class App{
                 Modify modify = new Modify(quotes);
                 Quote modified=modify.start(id);
                 modifyFile(modified);
+            }else if(command.equals("빌드")){
+                JsonBuild.start();
             }
         }
         scanner.close();
@@ -61,20 +63,20 @@ public class App{
     }
 
     private void deleteFile(int deleteId) {
-       //삭제할 파일
-       File file=new File(path+"/"+deleteId+".json");
-       file.delete();
-       return;
+        //삭제할 파일
+        File file=new File(path+"/"+deleteId+".json");
+        file.delete();
+        return;
     }
 
     private void loadFile() throws IOException {
         File folder=new File(path);   // 경로가 path인 폴더
         File[] files=folder.listFiles();    //folder의 file리스트
-
+        File datajson=new File(path+"/data.json");
         if(files!=null){
             for(File file:files){
                 //lastId 추출
-                if(file.getName().endsWith(".json")){
+                if(file.getName().endsWith(".json")&& !file.equals(datajson)){
                     try{
                         String contents=new String(Files.readAllBytes(file.toPath()));
                         JSONObject json=new JSONObject(contents);
@@ -108,21 +110,21 @@ public class App{
         }
     }
 
-//    public void saveFile(Quote quote){  // 파일 저장
-//        JSONObject json=new JSONObject();   //Json 객체 생성
-//        json.put("id",quote.getId());
-//        json.put("text",quote.getText());
-//        json.put("author",quote.getAuthor());
-//
-//        String jsonPath=path+"/"+quote.getId()+".json";
-//        try{
-//            FileWriter writer=new FileWriter(jsonPath);
-//            writer.write(json.toString(4)); //들여쓰기(4번) 포함해서 json문자열 작성
-//            writer.close();  //리소스 해제
-//        }catch (IOException e){
-//            System.out.println("오류"+e.getMessage());
-//        }
-//    }
+    public void saveFile(Quote quote){  // 파일 저장
+        JSONObject json=new JSONObject();   //Json 객체 생성
+        json.put("id",quote.getId());
+        json.put("text",quote.getText());
+        json.put("author",quote.getAuthor());
+
+        String jsonPath=path+"/"+quote.getId()+".json";
+        try{
+            FileWriter writer=new FileWriter(jsonPath);
+            writer.write(json.toString(4)); //들여쓰기(4번) 포함해서 json문자열 작성
+            writer.close();  //리소스 해제
+        }catch (IOException e){
+            System.out.println("오류"+e.getMessage());
+        }
+    }
 
 
 }
