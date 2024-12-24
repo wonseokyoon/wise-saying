@@ -43,6 +43,7 @@ public class App{
                 int id = Integer.parseInt(command.substring(6));
                 Delete delete=new Delete(quotes);
                 delete.start(id);
+                deleteFile(id);
             } else if (command.startsWith("수정?id=")) {
                 int id = Integer.parseInt(command.substring(6));
                 Modify modify = new Modify(quotes);
@@ -50,6 +51,13 @@ public class App{
             }
         }
         scanner.close();
+    }
+
+    private void deleteFile(int deleteId) {
+       //삭제할 파일
+       File file=new File(path+"/"+deleteId+".json");
+       file.delete();
+       return;
     }
 
     private void loadFile() throws IOException {
@@ -107,6 +115,7 @@ public class App{
         }catch (IOException e){
             System.out.println("오류"+e.getMessage());
         }
-
     }
+
+
 }
