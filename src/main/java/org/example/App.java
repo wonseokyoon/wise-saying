@@ -7,18 +7,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class App{
-    private static int id=1;
+    private static int lastId=1;
     List<Quote> quotes=new ArrayList<>();
     // 명언 저장 할 위치
     private static final String path="db/wiseSaying";
 
-    public void run(){
+    public void run() throws IOException {
         loadFile(); //파일 로드
         Scanner scanner=new Scanner(System.in);
         while(true) {
@@ -28,11 +29,11 @@ public class App{
 
             if (command.equals("등록")) {
                 Register register=new Register(quotes);
-                register.start(id);
+                register.start(lastId);
                 Quote newQuote=quotes.get(quotes.size()-1); //등록한 quote를 새로운 객체에 저장
                 saveFile(newQuote);
-                saveLastId(id);
-                id++;
+                saveLastId(lastId);
+                lastId++;
             } else if (command.equals("종료")) {
                 break;
             } else if (command.equals("목록")) {
@@ -51,22 +52,24 @@ public class App{
         scanner.close();
     }
 
-    private void loadFile() {
+    private void loadFile() throws IOException {
         File folder=new File(path);   // 경로가 path인 폴더
         File[] files=folder.listFiles();    //folder의 file리스트
+
         if(files!=null){
             for(File file:files){
+                //lastId 추출
                 if(file.getName().endsWith(".json")){
                     try{
                         String contents=new String(Files.readAllBytes(file.toPath()));
                         JSONObject json=new JSONObject(contents);
 
-                        int nextId= json.getInt("id");
+                        int id= json.getInt("id");
                         String text=json.getString("text");
                         String author=json.getString("author");
 
-                        quotes.add(new Quote(nextId,text,author));
-                        id=Math.max(id,nextId+1);
+                        quotes.add(new Quote(id,text,author));
+                        lastId=Math.max(lastId,id+1);
                     }catch (IOException e){
                         System.out.println("파일 로드 실패"+e.getMessage());
                     }catch (JSONException e){
@@ -74,6 +77,8 @@ public class App{
                     }
                 }
             }
+        }else{
+            System.out.println("파일이 없음");
         }
 
     }
