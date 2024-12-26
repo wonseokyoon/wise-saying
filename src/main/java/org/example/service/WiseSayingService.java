@@ -26,7 +26,7 @@ public class WiseSayingService implements WiseSayingRepository{
         if(files!=null){
             for(File file:files){
                 if(file.isFile() && file.getName().endsWith(".json")
-                        && !file.equals("data.json")){
+                        && !file.getName().equals("data.json")){
                     try {
                         String contents=new String(Files.readAllBytes(file.toPath()));
                         JSONObject json=new JSONObject(contents);

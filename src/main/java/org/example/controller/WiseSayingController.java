@@ -25,10 +25,12 @@ public class WiseSayingController {
         String author = scanner.nextLine().trim();
 
         int id = wiseSayingService.register(text,author);
-        System.out.println(id+"번 명언이 등록되었습니다.");
+        System.out.println((id-1)+"번 명언이 등록되었습니다.");
     }
     public void listQuote(){
         List<WiseSaying> sayings=wiseSayingService.findAll();
+        // 오름차순 정렬
+        sayings.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
         if (sayings.isEmpty()) {
             System.out.println("등록된 명언이 없음");
         } else {
@@ -41,6 +43,7 @@ public class WiseSayingController {
     public void deleteQuote(int id){
         List<WiseSaying> sayings=wiseSayingService.findAll();
         wiseSayingService.delete(id);
+        System.out.println((id)+"번 명언이 삭제되었습니다.");
     }
     public WiseSaying modifyQuote(int id) {
         List<WiseSaying> sayings=wiseSayingService.findAll();
@@ -54,10 +57,11 @@ public class WiseSayingController {
                 System.out.print("작가 : ");
                 String newAuthor = scanner.nextLine();
                 wiseSayingService.modify(id,newText,newAuthor);
+                System.out.println((id)+"번 명언이 수정되었습니다.");
                 return sayings.get(i);
             }
         }
-        System.out.println(id + "번 명언은 존재하지 않습니다");
+        System.out.println((id) + "번 명언은 존재하지 않습니다");
         return null;
     }
     public void build(){
