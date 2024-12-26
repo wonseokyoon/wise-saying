@@ -18,7 +18,7 @@ public class WiseSayingService implements WiseSayingRepository{
     private static final String path="db/wiseSaying";
     private static int lastId=1;
     public WiseSayingService(){
-        loadWiseSayings();
+        loadWiseSayings();  // service 객체 생성시 로드
     }
 
     private void loadWiseSayings(){
@@ -63,7 +63,6 @@ public class WiseSayingService implements WiseSayingRepository{
         saveLastId(lastId);
         // 파일 저장
         saveToFile(wiseSaying);
-
     }
 
     private void saveToFile(WiseSaying wiseSaying) {
@@ -80,15 +79,11 @@ public class WiseSayingService implements WiseSayingRepository{
     }
 
     @Override
-    public void modify(WiseSaying wiseSaying) {
-        for(WiseSaying saying:sayings){
-            if(saying.getId()==wiseSaying.getId()){
-                saying.setText(wiseSaying.getText());
-                saying.setAuthor(wiseSaying.getAuthor());
-                saveToFile(saying);
-                return;
-            }
-        }
+    public void modify(int id,String text,String author) {
+        WiseSaying saying=new WiseSaying(id,text,author);
+        saying.setText(text);
+        saying.setAuthor(author);
+        saveToFile(saying);
     }
 
     @Override
@@ -99,7 +94,10 @@ public class WiseSayingService implements WiseSayingRepository{
         File file=new File(path+"/"+id+".json");
         if(file.exists()){
             file.delete();
+        }else {
+            System.out.println("존재하지 않는 id번호");
         }
+
     }
 
     @Override
