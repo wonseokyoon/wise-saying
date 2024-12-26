@@ -22,6 +22,9 @@ public class App{
 
     public void run() throws IOException {
         loadFile(); //파일 로드
+
+
+
         Scanner scanner=new Scanner(System.in);
         while(true) {
             System.out.println("==명언 앱==");
