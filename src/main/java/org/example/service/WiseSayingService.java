@@ -100,7 +100,10 @@ public class WiseSayingService implements WiseSayingRepository{
 
     @Override
     public void build() {
+        loadWiseSayings();
+        String jsonPath=path+"/data.json";
         JSONArray jsonArray=new JSONArray();
+        sayings.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
         for(WiseSaying saying:sayings){
             JSONObject json=new JSONObject();
             json.put("id",saying.getId());
@@ -108,7 +111,11 @@ public class WiseSayingService implements WiseSayingRepository{
             json.put("author",saying.getAuthor());
             jsonArray.put(json);
         }
-        try(FileWriter writer=new FileWriter(path+"/data.json")){
+        File jsonfile=new File(jsonPath);
+        if(jsonfile.exists()){
+            jsonfile.delete();
+        }
+        try(FileWriter writer=new FileWriter(jsonPath)){
             writer.write(jsonArray.toString(4));
         }catch (IOException e){
             System.out.println("Json 빌드 오류: "+e.getMessage());
