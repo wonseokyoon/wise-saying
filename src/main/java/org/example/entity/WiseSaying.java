@@ -30,4 +30,9 @@ public class WiseSaying {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString(){
+        return id+" / " + text + " / " + author;
+    }
 }

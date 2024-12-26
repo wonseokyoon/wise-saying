@@ -17,11 +17,9 @@ public class WiseSayingService implements WiseSayingRepository{
     private List<WiseSaying> sayings=new ArrayList<>();
     private static final String path="db/wiseSaying";
     private static int lastId=1;
-    public WiseSayingService(){
-        loadWiseSayings();  // service 객체 생성시 로드
-    }
 
-    private void loadWiseSayings(){
+    public void loadWiseSayings(){
+        sayings.clear();
         File folder=new File(path);
         File[] files=folder.listFiles();
 
@@ -49,20 +47,20 @@ public class WiseSayingService implements WiseSayingRepository{
         }
     }
 
-
     @Override
     public List<WiseSaying> findAll() {
         return sayings;
     }
 
     @Override
-    public void register(String text,String author) {
+    public int register(String text,String author) {
         // 리스트에 저장
         WiseSaying wiseSaying=new WiseSaying(lastId++,text,author);
         sayings.add(wiseSaying);
         saveLastId(lastId);
         // 파일 저장
         saveToFile(wiseSaying);
+        return lastId;
     }
 
     private void saveToFile(WiseSaying wiseSaying) {
