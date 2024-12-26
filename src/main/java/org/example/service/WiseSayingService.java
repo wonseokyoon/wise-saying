@@ -1,4 +1,9 @@
 package org.example.service;
 
-public class WiseSayingService {
+
+import org.example.repository.WiseSayingRepository;
+
+
+public class WiseSayingService implements WiseSayingRepository{
+
 }
