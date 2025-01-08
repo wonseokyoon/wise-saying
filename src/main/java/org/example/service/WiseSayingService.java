@@ -62,18 +62,9 @@ public class WiseSayingService implements WiseSayingRepository{
         saveToFile(wiseSaying);
     }
 
-    @Override
     public void delete(int id) {
-        //리스트에서 제거
-        sayings.removeIf(saying -> saying.getId()==id);
-        //파일 삭제
-        File file=new File(path+"/"+id+".json");
-        if(file.exists()){
-            file.delete();
-        }else {
-            System.out.println("존재하지 않는 id번호");
-        }
-
+        WiseSaying wiseSaying=wiseSayingRepository.findById(id);
+        wiseSayingRepository.delete(wiseSaying);
     }
 
     @Override

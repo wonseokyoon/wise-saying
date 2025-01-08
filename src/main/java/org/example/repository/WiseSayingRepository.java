@@ -4,6 +4,7 @@ import org.example.entity.WiseSaying;
 import org.example.service.WiseSayingService;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +34,17 @@ public class WiseSayingRepository {
         return wiseSayingList.get(id);
     }
 
-    public void delete(int id);
+    public void delete(WiseSaying wiseSaying){
+        //리스트에서 제거
+        wiseSayingList.removeIf(wisesaying -> wisesaying.getId()== wiseSaying.getId());
+        //파일 삭제
+        File file=new File(path+"/"+wiseSaying.getId()+".json");
+        if(file.exists()){
+            file.delete();
+        }else {
+            System.out.println("존재하지 않는 id번호");
+        }
+    }
     public void build();
     public void saveLastId(int id);
 
