@@ -31,39 +31,39 @@ public class WiseSayingController {
     }
 
     public void listQuote(){
-        List<WiseSaying> sayings=wiseSayingService.findAll();
+        List<WiseSaying> wiseSayingList=wiseSayingService.findAll();
         // 오름차순 정렬
-        sayings.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
-        if (sayings.isEmpty()) {
+        wiseSayingList.sort((wiseSaying,wiseSaying2)
+                ->Integer.compare(wiseSaying.getId(), wiseSaying2.getId()));
+        if (wiseSayingList.isEmpty()) {
             System.out.println("등록된 명언이 없음");
         } else {
             System.out.println("========================");
-            for (int i= sayings.size()-1;i>=0;i--) {
-                System.out.println(sayings.get(i));
+            for (int i= wiseSayingList.size()-1;i>=0;i--) {
+                System.out.println(wiseSayingList.get(i));
             }
         }
     }
     public void deleteQuote(int id){
-        List<WiseSaying> sayings=wiseSayingService.findAll();
         if(!wiseSayingService.delete(id)){   // 삭제 실패
              System.out.println("존재하지 않는 id번호");
         }
         System.out.println((id)+"번 명언이 삭제되었습니다.");
     }
     public WiseSaying modifyQuote(int id) {
-        List<WiseSaying> sayings=wiseSayingService.findAll();
-        for (int i = 0; i < sayings.size(); i++) {
-            if (id == sayings.get(i).getId()) {
-                System.out.println("명언(기존) : " + sayings.get(i).getText());
+        List<WiseSaying> wiseSayingList=wiseSayingService.findAll();
+        for (int i = 0; i < wiseSayingList.size(); i++) {
+            if (id == wiseSayingList.get(i).getId()) {
+                System.out.println("명언(기존) : " + wiseSayingList.get(i).getText());
                 System.out.print("명언 : ");
                 String newText = scanner.nextLine();
 
-                System.out.println("작가(기존) : " + sayings.get(i).getAuthor());
+                System.out.println("작가(기존) : " + wiseSayingList.get(i).getAuthor());
                 System.out.print("작가 : ");
                 String newAuthor = scanner.nextLine();
                 wiseSayingService.modify(id,newText,newAuthor);
                 System.out.println((id)+"번 명언이 수정되었습니다.");
-                return sayings.get(i);
+                return wiseSayingList.get(i);
             }
         }
         System.out.println((id) + "번 명언은 존재하지 않습니다");

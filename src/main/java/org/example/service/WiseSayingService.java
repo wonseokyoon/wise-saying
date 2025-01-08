@@ -2,8 +2,6 @@ package org.example.service;
 
 import org.example.entity.WiseSaying;
 import org.example.repository.WiseSayingRepository;
-
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,6 +21,11 @@ public class WiseSayingService {
         return wiseSayingRepository.register(text, author);
     }
 
+    public boolean delete(int id) {
+        WiseSaying wiseSaying=wiseSayingRepository.findById(id);
+        if(wiseSaying==null) return false;
+        return wiseSayingRepository.delete(wiseSaying);
+    }
 
     public void modify(int id,String text,String author) {
         WiseSaying wiseSaying=wiseSayingRepository.findById(id);
@@ -30,21 +33,12 @@ public class WiseSayingService {
         saveToFile(wiseSaying);
     }
 
-    public boolean delete(int id) {
-        WiseSaying wiseSaying=wiseSayingRepository.findById(id);
-        return wiseSayingRepository.delete(wiseSaying);
-    }
-
     public void build(List<WiseSaying> wiseSayingList) throws IOException {
         wiseSayingRepository.build(wiseSayingList);
     }
 
-
     public static void saveLastId(int id) throws IOException {
         wiseSayingRepository.saveLastId(id);
-//        FileWriter writer=new FileWriter(path+"/lastId.txt");
-//        writer.write(String.valueOf(id));
-//        writer.close();
     }
     public void saveToFile(WiseSaying wiseSaying) {
         wiseSayingRepository.saveToFile(wiseSaying);
