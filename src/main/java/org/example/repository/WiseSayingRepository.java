@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.service.WiseSayingService.saveLastId;
+import static org.example.service.WiseSayingService.saveToFile;
+
 public class WiseSayingRepository {
     private static final String path="db/wiseSaying";
     private List<WiseSaying> wiseSayingList=new ArrayList<>();
@@ -18,7 +21,7 @@ public class WiseSayingRepository {
     public List<WiseSaying> findAll(){
         return wiseSayingList;
     }
-    public int register(String text,String author){
+    public int register(String text,String author) throws IOException {
         WiseSaying wiseSaying=new WiseSaying(++lastId,text,author);
         wiseSayingList.add(wiseSaying);
         saveLastId(lastId);
@@ -46,7 +49,8 @@ public class WiseSayingRepository {
         }
     }
     public void build();
-    public void saveLastId(int id);
+
+
 
 
 

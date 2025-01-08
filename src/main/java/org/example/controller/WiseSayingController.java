@@ -3,18 +3,21 @@ package org.example.controller;
 import org.example.entity.WiseSaying;
 import org.example.service.WiseSayingService;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
     private WiseSayingService wiseSayingService;
     private Scanner scanner;
+    private static final String path="db/wiseSaying";
     public WiseSayingController (WiseSayingService wiseSayingService){
         this.wiseSayingService=wiseSayingService;
         this.scanner=new Scanner(System.in);
     }
 
-    public void registerQuote() {
+    public void registerQuote() throws IOException {
         System.out.print("명언: ");
         String text = scanner.nextLine().trim();
 
@@ -64,5 +67,13 @@ public class WiseSayingController {
     }
     public void build(){
         wiseSayingService.build();
+    }
+
+    public void saveLastId(int id){
+        try{
+            WiseSayingService.saveLastId(id);
+        }catch (IOException e){
+            System.out.println("ID 저장 오류: "+e.getMessage());
+        }
     }
 }

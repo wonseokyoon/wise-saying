@@ -50,8 +50,7 @@ public class WiseSayingService implements WiseSayingRepository{
         return wiseSayingRepository.findAll();
     }
 
-    @Override
-    public int register(String text,String author) {
+    public int register(String text,String author) throws IOException {
         return wiseSayingRepository.register(text, author);
     }
 
@@ -90,15 +89,12 @@ public class WiseSayingService implements WiseSayingRepository{
             System.out.println("Json 빌드 오류: "+e.getMessage());
         }
     }
-    @Override
-    public void saveLastId(int id){
-        try{
-            FileWriter writer=new FileWriter(path+"/lastId.txt");
-            writer.write(String.valueOf(id));
-            writer.close();
-        }catch (IOException e){
-            System.out.println("ID 저장 오류: "+e.getMessage());
-        }
+
+
+    public static void saveLastId(int id) throws IOException {
+        FileWriter writer=new FileWriter(path+"/lastId.txt");
+        writer.write(String.valueOf(id));
+        writer.close();
     }
     public static void saveToFile(WiseSaying wiseSaying) {
         JSONObject json=new JSONObject();
