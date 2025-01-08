@@ -55,12 +55,11 @@ public class WiseSayingService implements WiseSayingRepository{
         return wiseSayingRepository.register(text, author);
     }
 
-    @Override
+
     public void modify(int id,String text,String author) {
-        WiseSaying saying=new WiseSaying(id,text,author);
-        saying.setText(text);
-        saying.setAuthor(author);
-        saveToFile(saying);
+        WiseSaying wiseSaying=wiseSayingRepository.findById(id);
+        wiseSayingRepository.modify(wiseSaying,text,author);
+        saveToFile(wiseSaying);
     }
 
     @Override
@@ -108,6 +107,18 @@ public class WiseSayingService implements WiseSayingRepository{
             writer.close();
         }catch (IOException e){
             System.out.println("ID 저장 오류: "+e.getMessage());
+        }
+    }
+    public static void saveToFile(WiseSaying wiseSaying) {
+        JSONObject json=new JSONObject();
+        json.put("id",wiseSaying.getId());
+        json.put("text",wiseSaying.getText());
+        json.put("author",wiseSaying.getAuthor());
+        String jsonPath=path+"/"+wiseSaying.getId()+".json";
+        try (FileWriter writer=new FileWriter(jsonPath)){
+            writer.write(json.toString(4));
+        }catch (IOException e){
+            System.out.println("저장 오류: "+e.getMessage());
         }
     }
 

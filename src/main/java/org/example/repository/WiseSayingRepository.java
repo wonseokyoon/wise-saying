@@ -24,23 +24,19 @@ public class WiseSayingRepository {
         saveToFile(wiseSaying);
         return lastId;
     }
-    public void modify(int id,String text,String author);
+    public void modify(WiseSaying wiseSaying,String newText,String newAuthor){
+        wiseSaying.setText(newText);
+        wiseSaying.setAuthor(newAuthor);
+    }
+
+    public WiseSaying findById(int id) {
+        return wiseSayingList.get(id);
+    }
+
     public void delete(int id);
     public void build();
     public void saveLastId(int id);
 
-    //파일 저장
-    private static void saveToFile(WiseSaying wiseSaying) {
-        JSONObject json=new JSONObject();
-        json.put("id",wiseSaying.getId());
-        json.put("text",wiseSaying.getText());
-        json.put("author",wiseSaying.getAuthor());
-        String jsonPath=path+"/"+wiseSaying.getId()+".json";
-        try (FileWriter writer=new FileWriter(jsonPath)){
-            writer.write(json.toString(4));
-        }catch (IOException e){
-            System.out.println("저장 오류: "+e.getMessage());
-        }
-    }
+
 
 }
