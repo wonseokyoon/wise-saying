@@ -2,16 +2,18 @@ package org.example.repository;
 
 import org.example.entity.WiseSaying;
 import org.example.service.WiseSayingService;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.service.WiseSayingService.saveLastId;
-import static org.example.service.WiseSayingService.saveToFile;
 
 public class WiseSayingRepository {
     private static final String path="db/wiseSaying";
@@ -36,6 +38,43 @@ public class WiseSayingRepository {
     public WiseSaying findById(int id) {
         return wiseSayingList.get(id);
     }
+    public List<WiseSaying> loadWiseSayings() {
+        wiseSayingList.clear();
+        File folder = new File(path);
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".json") && !file.getName().equals("data.json")) {
+                    try {
+                        String contents = new String(Files.readAllBytes(file.toPath()));
+                        JSONObject json = new JSONObject(contents);
+                        int id = json.getInt("id");
+                        String text = json.getString("text");
+                        String author = json.getString("author");
+                        wiseSayingList.add(new WiseSaying(id, text, author));
+                    } catch (IOException | JSONException e) {
+                        System.out.println("파일 로드 실패: " + e.getMessage());
+                    }
+                }
+            }
+        }
+        return wiseSayingList;
+    }
+
+    public void saveToFile(WiseSaying wiseSaying) {
+        JSONObject json=new JSONObject();
+        json.put("id",wiseSaying.getId());
+        json.put("text",wiseSaying.getText());
+        json.put("author",wiseSaying.getAuthor());
+        String jsonPath=path+"/"+wiseSaying.getId()+".json";
+        try (FileWriter writer=new FileWriter(jsonPath)){
+            writer.write(json.toString(4));
+        }catch (IOException e){
+            System.out.println("저장 오류: "+e.getMessage());
+        }
+    }
+
 
     public void delete(WiseSaying wiseSaying){
         //리스트에서 제거
@@ -48,10 +87,31 @@ public class WiseSayingRepository {
             System.out.println("존재하지 않는 id번호");
         }
     }
-    public void build();
+    public void build(List<WiseSaying> wiseSayingList){
+        wiseSayingList.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
 
+        // Json
+        String jsonPath=path+"/data.json";
+        JSONArray jsonArray=new JSONArray();
+        for(WiseSaying wisesaying:wiseSayingList){
+            JSONObject json=new JSONObject();
+            json.put("id",wisesaying.getId());
+            json.put("text",wisesaying.getText());
+            json.put("author",wisesaying.getAuthor());
+            jsonArray.put(json);
+        }
 
-
+        //저장
+        File jsonfile=new File(jsonPath);
+        if(jsonfile.exists()){
+            jsonfile.delete();
+        }
+        try(FileWriter writer=new FileWriter(jsonPath)){
+            writer.write(jsonArray.toString(4));
+        }catch (IOException e){
+            System.out.println("Json 빌드 오류: "+e.getMessage());
+        }
+    }
 
 
 }
