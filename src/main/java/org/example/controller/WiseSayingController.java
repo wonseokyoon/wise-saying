@@ -25,7 +25,9 @@ public class WiseSayingController {
         String author = scanner.nextLine().trim();
 
         int id = wiseSayingService.register(text,author);
+        saveLastId(id);
         System.out.println((id-1)+"번 명언이 등록되었습니다.");
+
     }
 
     public void listQuote(){

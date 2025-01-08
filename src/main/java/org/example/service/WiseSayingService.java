@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class WiseSayingService {
-    WiseSayingRepository wiseSayingRepository=new WiseSayingRepository();
+    static WiseSayingRepository wiseSayingRepository=new WiseSayingRepository();
     private static final String path="db/wiseSaying";
 
     public List<WiseSaying> loadWiseSayings(){
@@ -41,9 +41,10 @@ public class WiseSayingService {
 
 
     public static void saveLastId(int id) throws IOException {
-        FileWriter writer=new FileWriter(path+"/lastId.txt");
-        writer.write(String.valueOf(id));
-        writer.close();
+        wiseSayingRepository.saveLastId(id);
+//        FileWriter writer=new FileWriter(path+"/lastId.txt");
+//        writer.write(String.valueOf(id));
+//        writer.close();
     }
     public void saveToFile(WiseSaying wiseSaying) {
         wiseSayingRepository.saveToFile(wiseSaying);

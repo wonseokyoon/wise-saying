@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.service.WiseSayingService.saveLastId;
 
 public class WiseSayingRepository {
     private static final String path="db/wiseSaying";
@@ -112,4 +111,9 @@ public class WiseSayingRepository {
     }
 
 
+    public void saveLastId(int id) throws IOException {
+        FileWriter writer=new FileWriter(path+"/lastId.txt");
+        writer.write(String.valueOf(id));
+        writer.close();
+    }
 }
