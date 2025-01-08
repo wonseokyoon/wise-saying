@@ -45,7 +45,9 @@ public class WiseSayingController {
     }
     public void deleteQuote(int id){
         List<WiseSaying> sayings=wiseSayingService.findAll();
-        wiseSayingService.delete(id);
+        if(!wiseSayingService.delete(id)){   // 삭제 실패
+             System.out.println("존재하지 않는 id번호");
+        }
         System.out.println((id)+"번 명언이 삭제되었습니다.");
     }
     public WiseSaying modifyQuote(int id) {

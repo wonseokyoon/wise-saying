@@ -30,9 +30,9 @@ public class WiseSayingService {
         saveToFile(wiseSaying);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         WiseSaying wiseSaying=wiseSayingRepository.findById(id);
-        wiseSayingRepository.delete(wiseSaying);
+        return wiseSayingRepository.delete(wiseSaying);
     }
 
     public void build(List<WiseSaying> wiseSayingList) throws IOException {

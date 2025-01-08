@@ -75,16 +75,21 @@ public class WiseSayingRepository {
     }
 
 
-    public void delete(WiseSaying wiseSaying){
+    public boolean delete(WiseSaying wiseSaying){
         //리스트에서 제거
         wiseSayingList.removeIf(wisesaying -> wisesaying.getId()== wiseSaying.getId());
         //파일 삭제
         File file=new File(path+"/"+wiseSaying.getId()+".json");
         if(file.exists()){
             file.delete();
-        }else {
-            System.out.println("존재하지 않는 id번호");
+            return true;
         }
+        else return false;
+//        if(file.exists()){
+//            file.delete();
+//        }else {
+//            System.out.println("존재하지 않는 id번호");
+//        }
     }
     public void build(List<WiseSaying> wiseSayingList) throws IOException {
         wiseSayingList.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
