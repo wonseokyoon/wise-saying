@@ -1,11 +1,8 @@
 package org.example.controller;
 
 import org.example.entity.WiseSaying;
-import org.example.repository.WiseSayingRepository;
 import org.example.service.WiseSayingService;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,6 +24,7 @@ public class WiseSayingController {
         int id = wiseSayingService.register(text,author);
         System.out.println((id-1)+"번 명언이 등록되었습니다.");
     }
+
     public void listQuote(){
         List<WiseSaying> sayings=wiseSayingService.findAll();
         // 오름차순 정렬

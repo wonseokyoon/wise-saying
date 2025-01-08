@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WiseSayingService implements WiseSayingRepository{
-    private List<WiseSaying> sayings=new ArrayList<>();
+    WiseSayingRepository wiseSayingRepository=new WiseSayingRepository();
     private static final String path="db/wiseSaying";
-    private static int lastId=1;
 
     public void loadWiseSayings(){
         sayings.clear();
@@ -47,33 +46,13 @@ public class WiseSayingService implements WiseSayingRepository{
         }
     }
 
-    @Override
     public List<WiseSaying> findAll() {
-        return sayings;
+        return wiseSayingRepository.findAll();
     }
 
     @Override
     public int register(String text,String author) {
-        // 리스트에 저장
-        WiseSaying wiseSaying=new WiseSaying(lastId++,text,author);
-        sayings.add(wiseSaying);
-        saveLastId(lastId);
-        // 파일 저장
-        saveToFile(wiseSaying);
-        return lastId;
-    }
-
-    private void saveToFile(WiseSaying wiseSaying) {
-        JSONObject json=new JSONObject();
-        json.put("id",wiseSaying.getId());
-        json.put("text",wiseSaying.getText());
-        json.put("author",wiseSaying.getAuthor());
-        String jsonPath=path+"/"+wiseSaying.getId()+".json";
-        try (FileWriter writer=new FileWriter(jsonPath)){
-            writer.write(json.toString(4));
-        }catch (IOException e){
-            System.out.println("저장 오류: "+e.getMessage());
-        }
+        return wiseSayingRepository.register(text, author);
     }
 
     @Override
