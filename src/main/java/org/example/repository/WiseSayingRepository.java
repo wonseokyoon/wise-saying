@@ -87,7 +87,7 @@ public class WiseSayingRepository {
             System.out.println("존재하지 않는 id번호");
         }
     }
-    public void build(List<WiseSaying> wiseSayingList){
+    public void build(List<WiseSaying> wiseSayingList) throws IOException {
         wiseSayingList.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
 
         // Json
@@ -106,11 +106,9 @@ public class WiseSayingRepository {
         if(jsonfile.exists()){
             jsonfile.delete();
         }
-        try(FileWriter writer=new FileWriter(jsonPath)){
-            writer.write(jsonArray.toString(4));
-        }catch (IOException e){
-            System.out.println("Json 빌드 오류: "+e.getMessage());
-        }
+        FileWriter writer=new FileWriter(jsonPath);
+        writer.write(jsonArray.toString(4));
+
     }
 
 

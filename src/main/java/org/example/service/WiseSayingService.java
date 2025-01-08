@@ -35,8 +35,7 @@ public class WiseSayingService {
         wiseSayingRepository.delete(wiseSaying);
     }
 
-    public void build() {
-        List<WiseSaying> wiseSayingList=wiseSayingRepository.loadWiseSayings();
+    public void build(List<WiseSaying> wiseSayingList) throws IOException {
         wiseSayingRepository.build(wiseSayingList);
     }
 

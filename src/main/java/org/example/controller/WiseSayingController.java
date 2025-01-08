@@ -66,7 +66,13 @@ public class WiseSayingController {
         return null;
     }
     public void build(){
-        wiseSayingService.build();
+        List<WiseSaying> wiseSayingList=wiseSayingService.loadWiseSayings();
+        try {
+            wiseSayingService.build(wiseSayingList);
+        } catch (IOException e) {
+            System.out.println("Json 빌드 오류");
+            e.printStackTrace();
+        }
     }
 
     public void saveLastId(int id){
