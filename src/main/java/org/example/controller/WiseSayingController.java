@@ -25,7 +25,7 @@ public class WiseSayingController {
         String author = scanner.nextLine().trim();
 
         int id = wiseSayingService.register(text,author);
-        System.out.println((id-1)+"번 명언이 등록되었습니다.");
+        System.out.println(id+"번 명언이 등록되었습니다.");
 
     }
 
@@ -47,7 +47,9 @@ public class WiseSayingController {
         if(!wiseSayingService.delete(id)){   // 삭제 실패
              System.out.println("존재하지 않는 id번호");
         }
-        System.out.println((id)+"번 명언이 삭제되었습니다.");
+        else{
+            System.out.println((id)+"번 명언이 삭제되었습니다.");
+        }
     }
     public WiseSaying modifyQuote(int id) {
         List<WiseSaying> wiseSayingList=wiseSayingService.findAll();

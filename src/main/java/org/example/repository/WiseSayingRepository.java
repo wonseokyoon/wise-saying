@@ -17,7 +17,7 @@ import java.util.List;
 public class WiseSayingRepository {
     private static final String path="db/wiseSaying";
     private List<WiseSaying> wiseSayingList=new ArrayList<>();
-    private static int lastId=1;
+    private static int lastId=0;
 
     public void saveLastId(int id) throws IOException {
         FileWriter writer=new FileWriter(path+"/lastId.txt");
@@ -37,6 +37,7 @@ public class WiseSayingRepository {
     }
 
     public int register(String text,String author) throws IOException {
+        lastId=loadLastId();
         WiseSaying wiseSaying=new WiseSaying(++lastId,text,author);
         wiseSayingList.add(wiseSaying);
         saveLastId(lastId);
@@ -123,5 +124,18 @@ public class WiseSayingRepository {
         writer.write(jsonArray.toString(4));
 
     }
-
+    public int loadLastId() throws IOException {
+        File files=new File(path+"/lastId.txt");
+        if(!files.exists()){
+            saveLastId(lastId);
+            return lastId;
+        }
+        try {
+            String id=new String(Files.readAllBytes(files.toPath()));
+            return Integer.parseInt(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return lastId;
+        }
+    }
 }
