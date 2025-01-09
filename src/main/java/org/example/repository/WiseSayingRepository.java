@@ -102,8 +102,6 @@ public class WiseSayingRepository {
 
 
     public void build(List<WiseSaying> wiseSayingList) throws IOException {
-        wiseSayingList.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));
-
         // Json
         String jsonPath=path+"/data.json";
         JSONArray jsonArray=new JSONArray();

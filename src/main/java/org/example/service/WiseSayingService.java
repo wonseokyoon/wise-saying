@@ -3,6 +3,8 @@ package org.example.service;
 import org.example.entity.WiseSaying;
 import org.example.repository.WiseSayingRepository;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class WiseSayingService {
@@ -56,5 +58,10 @@ public class WiseSayingService {
         }else {
             return null;
         }
+    }
+
+    public List<WiseSaying> reverOrder(List<WiseSaying> wiseSayingList) {
+        Collections.sort(wiseSayingList, Comparator.comparingInt(WiseSaying::getId).reversed());
+        return wiseSayingList;
     }
 }

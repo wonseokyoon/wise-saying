@@ -20,4 +20,6 @@ public class WiseSaying {
     public String toString(){
         return id+" / " + text + " / " + author;
     }
+    //역순 정렬
+
 }

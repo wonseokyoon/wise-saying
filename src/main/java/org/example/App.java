@@ -43,14 +43,12 @@ public class App{
                 wiseSayingController.build();
                 wiseSayingService.loadWiseSayings();
                 System.out.println("빌드 완료");
-            } else if (command.startsWith("목록?type")) {  //목록?type=content&word=후
-                String str=command.split("\\?")[1];   //type=content , word=후
-                String[] params=str.split("&");
-                if(params.length < 2 || !params[0].contains("=") || !params[1].contains("=")){
-                    throw new IllegalAccessException("잘못된 명령어 형식입니다");
-                }
-                String type=params[0].split("=")[1];  //type
-                String word=params[1].split("=")[1];
+            } else if (command.equals("검색")) {  //목록?type=content&word=후
+                System.out.print("타입(content / author): ");
+                String type=scanner.nextLine().trim();
+                System.out.print("검색어: ");
+                String word=scanner.nextLine().trim();
+
                 wiseSayingController.search(type,word);
             } else{
                 System.out.println("유효하지 않은 명령");

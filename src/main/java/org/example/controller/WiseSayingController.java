@@ -5,6 +5,7 @@ import org.example.service.WiseSayingService;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,9 +32,7 @@ public class WiseSayingController {
 
     public void listQuote(){
         List<WiseSaying> wiseSayingList=wiseSayingService.findAll();
-        // 오름차순 정렬
-        wiseSayingList.sort((wiseSaying1,wiseSaying2)
-                ->Integer.compare(wiseSaying1.getId(), wiseSaying2.getId()));
+
         if (wiseSayingList.isEmpty()) {
             System.out.println("등록된 명언이 없음");
         } else {
@@ -84,8 +83,6 @@ public class WiseSayingController {
 
     public void search(String type, String word) {
         wiseSayingService.loadWiseSayings();    //로딩
-        System.out.println("검색 타입 : "+ type);
-        System.out.println("검색어 : "+ word);
         System.out.println("----------------------");
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
@@ -97,10 +94,10 @@ public class WiseSayingController {
         }
 
         if(findList.isEmpty()){
-            System.out.println(word+ "는 목록에 없습니다.");
+            System.out.println("\""+word+"\""+ "은(는) 목록에 없습니다.");
             return;
         }
-        findList.sort((w1,w2)->Integer.compare(w1.getId(), w2.getId()));
+        findList=wiseSayingService.reverOrder(findList);
         for(WiseSaying wiseSaying:findList){
             System.out.println(wiseSaying);
         }
