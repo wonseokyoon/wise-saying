@@ -71,7 +71,8 @@ public class WiseSayingController {
         return null;
     }
     public void build(){
-        List<WiseSaying> wiseSayingList=wiseSayingService.loadWiseSayings();
+        wiseSayingService.loadWiseSayings();
+        List<WiseSaying> wiseSayingList=wiseSayingService.findAll();
         try {
             wiseSayingService.build(wiseSayingList);
         } catch (IOException e) {
@@ -80,11 +81,5 @@ public class WiseSayingController {
         }
     }
 
-    public void saveLastId(int id){
-        try{
-            WiseSayingService.saveLastId(id);
-        }catch (IOException e){
-            System.out.println("ID 저장 오류: "+e.getMessage());
-        }
-    }
+
 }

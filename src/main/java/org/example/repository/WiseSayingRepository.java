@@ -122,6 +122,7 @@ public class WiseSayingRepository {
         }
         FileWriter writer=new FileWriter(jsonPath);
         writer.write(jsonArray.toString(4));
+        writer.close();
 
     }
     public int loadLastId() throws IOException {

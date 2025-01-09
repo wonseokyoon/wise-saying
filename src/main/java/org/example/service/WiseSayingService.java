@@ -18,6 +18,7 @@ public class WiseSayingService {
     }
 
     public int register(String text,String author) throws IOException {
+        loadWiseSayings();
         return wiseSayingRepository.register(text, author);
     }
 
@@ -34,6 +35,9 @@ public class WiseSayingService {
     }
 
     public void build(List<WiseSaying> wiseSayingList) throws IOException {
+        if(wiseSayingList==null || wiseSayingList.isEmpty()){
+            throw new IOException("명언 목록이 비어있음");
+        }
         wiseSayingRepository.build(wiseSayingList);
     }
 
