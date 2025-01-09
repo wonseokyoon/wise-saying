@@ -139,4 +139,27 @@ public class WiseSayingRepository {
             return lastId;
         }
     }
+
+    public List<WiseSaying> findByContent(String word) {
+        wiseSayingList=findAll();
+        List<WiseSaying> findList=new ArrayList<>();
+        for(WiseSaying wiseSaying:wiseSayingList){
+            if(wiseSaying.getText().contains(word)){    //word를 포함시키는 경우
+                findList.add(wiseSaying);
+            }
+        }
+        return findList;
+
+    }
+
+    public List<WiseSaying> findByAuthor(String word) {
+        wiseSayingList=findAll();
+        List<WiseSaying> findList=new ArrayList<>();
+        for(WiseSaying wiseSaying:wiseSayingList){
+            if(wiseSaying.getAuthor().contains(word)){
+                findList.add(wiseSaying);
+            }
+        }
+        return findList;
+    }
 }

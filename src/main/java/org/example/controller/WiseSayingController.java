@@ -43,6 +43,7 @@ public class WiseSayingController {
             }
         }
     }
+
     public void deleteQuote(int id){
         if(!wiseSayingService.delete(id)){   // 삭제 실패
              System.out.println("존재하지 않는 id번호");
@@ -81,5 +82,22 @@ public class WiseSayingController {
         }
     }
 
+    public void search(String type, String word) {
+        wiseSayingService.loadWiseSayings();    //로딩
+        System.out.println("검색 타입 : "+ type);
+        System.out.println("검색어 : "+ word);
+        System.out.println("----------------------");
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("----------------------");
+
+        List<WiseSaying> findList=wiseSayingService.search(type,word);
+        if(findList==null){
+            System.out.println(word+ "는 목록에 없습니다.");
+        }
+        findList.sort((w1,w2)->Integer.compare(w1.getId(), w2.getId()));
+        for(WiseSaying wiseSaying:findList){
+            System.out.println(wiseSaying);
+        }
+    }
 
 }

@@ -48,4 +48,19 @@ public class WiseSayingService {
         wiseSayingRepository.saveToFile(wiseSaying);
     }
 
+    public List<WiseSaying> search(String type, String word) {
+        if(type=="content"){    // 타입이 content
+            if(wiseSayingRepository.findByContent(word).isEmpty()){
+                return null;
+            }
+            return wiseSayingRepository.findByContent(word);
+        }else if(type=="author"){   //타입이 author
+            if(wiseSayingRepository.findByAuthor(word).isEmpty()) {
+                return null;
+            }
+            return wiseSayingRepository.findByAuthor(word);
+        }else {
+            throw new IllegalArgumentException("유효하지 않은 타입: "+type);
+        }
+    }
 }
