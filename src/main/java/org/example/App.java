@@ -46,6 +46,7 @@ public class App{
             }else{
                 System.out.println("유효하지 않은 명령");
             }
+            wiseSayingService.loadWiseSayings();    //로딩
         }
         scanner.close();
     }

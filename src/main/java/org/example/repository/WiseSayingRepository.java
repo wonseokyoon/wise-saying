@@ -53,6 +53,7 @@ public class WiseSayingRepository {
             file.delete();
             return removed;
         }
+        //삭제 실패시
         return false;
     }
 
@@ -97,6 +98,7 @@ public class WiseSayingRepository {
             System.out.println("저장 오류: "+e.getMessage());
         }
     }
+
 
     public void build(List<WiseSaying> wiseSayingList) throws IOException {
         wiseSayingList.sort((s1,s2)->Integer.compare(s1.getId(), s2.getId()));

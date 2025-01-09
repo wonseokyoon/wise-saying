@@ -25,7 +25,6 @@ public class WiseSayingController {
         String author = scanner.nextLine().trim();
 
         int id = wiseSayingService.register(text,author);
-        saveLastId(id);
         System.out.println((id-1)+"번 명언이 등록되었습니다.");
 
     }
@@ -33,8 +32,8 @@ public class WiseSayingController {
     public void listQuote(){
         List<WiseSaying> wiseSayingList=wiseSayingService.findAll();
         // 오름차순 정렬
-        wiseSayingList.sort((wiseSaying,wiseSaying2)
-                ->Integer.compare(wiseSaying.getId(), wiseSaying2.getId()));
+        wiseSayingList.sort((wiseSaying1,wiseSaying2)
+                ->Integer.compare(wiseSaying1.getId(), wiseSaying2.getId()));
         if (wiseSayingList.isEmpty()) {
             System.out.println("등록된 명언이 없음");
         } else {
