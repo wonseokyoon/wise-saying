@@ -92,7 +92,13 @@ public class WiseSayingController {
 
         List<WiseSaying> findList=wiseSayingService.search(type,word);
         if(findList==null){
+            System.out.println("유효하지 않은 타입");
+            return;
+        }
+
+        if(findList.isEmpty()){
             System.out.println(word+ "는 목록에 없습니다.");
+            return;
         }
         findList.sort((w1,w2)->Integer.compare(w1.getId(), w2.getId()));
         for(WiseSaying wiseSaying:findList){

@@ -8,7 +8,7 @@ import java.io.IOException;
 public class main {
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception{
         WiseSayingService service=new WiseSayingService();
         WiseSayingController controller=new WiseSayingController(service);
         App app=new App(controller,service);

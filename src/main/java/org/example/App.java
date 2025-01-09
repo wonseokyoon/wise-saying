@@ -14,7 +14,7 @@ public class App{
         this.wiseSayingService=wiseSayingService;
     }
 
-    public void run() throws IOException {
+    public void run() throws IOException, IllegalAccessException {
 
         Scanner scanner = new Scanner(System.in);
         while(true) {
@@ -44,9 +44,13 @@ public class App{
                 wiseSayingService.loadWiseSayings();
                 System.out.println("빌드 완료");
             } else if (command.startsWith("목록?type")) {  //목록?type=content&word=후
-                String str=command.split("\\?")[1];   //type=content&word=후
-                String type=str.split("&")[0].split("=")[1];  //type
-                String word=str.split("&")[1].split("=")[1];
+                String str=command.split("\\?")[1];   //type=content , word=후
+                String[] params=str.split("&");
+                if(params.length < 2 || !params[0].contains("=") || !params[1].contains("=")){
+                    throw new IllegalAccessException("잘못된 명령어 형식입니다");
+                }
+                String type=params[0].split("=")[1];  //type
+                String word=params[1].split("=")[1];
                 wiseSayingController.search(type,word);
             } else{
                 System.out.println("유효하지 않은 명령");
