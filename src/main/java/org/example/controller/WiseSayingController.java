@@ -37,8 +37,9 @@ public class WiseSayingController {
             System.out.println("등록된 명언이 없음");
         } else {
             System.out.println("========================");
-            for (int i= wiseSayingList.size()-1;i>=0;i--) {
-                System.out.println(wiseSayingList.get(i));
+            wiseSayingList=wiseSayingService.reverOrder(wiseSayingList);
+            for(WiseSaying wiseSaying:wiseSayingList){
+                System.out.println(wiseSaying);
             }
         }
     }
