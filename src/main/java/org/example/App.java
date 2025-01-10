@@ -50,7 +50,15 @@ public class App{
                 String word=scanner.nextLine().trim();
 
                 wiseSayingController.search(type,word);
-            } else{
+            } else if(command.startsWith("목록?")){
+                String[] param=command.split("\\?");
+                if(!param[1].split("=")[0].equals("page")){
+                    System.out.println("유효하지 않은 명령");
+                }
+                int pageNum= Integer.parseInt(param[1].split("=")[1]);
+                wiseSayingController.paging(pageNum);
+            }
+            else{
                 System.out.println("유효하지 않은 명령");
             }
             wiseSayingService.loadWiseSayings();    //로딩

@@ -64,4 +64,24 @@ public class WiseSayingService {
         Collections.sort(wiseSayingList, Comparator.comparingInt(WiseSaying::getId).reversed());
         return wiseSayingList;
     }
+
+    public List<WiseSaying> paging(List<WiseSaying> wiseSayingList, int pageNum) {
+        int pageSize=5;
+        int start=(pageNum-1)*pageSize+1;
+        int end=Math.min(start+pageSize-1
+        ,wiseSayingList.size());
+
+        //1. pageNum=0 or null
+        if(pageNum<=0){
+            return paging(wiseSayingList,1);
+        }
+        else if(start>wiseSayingList.size()){
+            return null;
+        }
+        else{
+            return wiseSayingRepository.paging(wiseSayingList,pageNum,start,end);
+        }
+
+
+    }
 }

@@ -104,4 +104,17 @@ public class WiseSayingController {
         }
     }
 
+    public void paging(int pageNum) {
+        List<WiseSaying> wiseSayingList= wiseSayingService.findAll();
+        List<WiseSaying> pageList=wiseSayingService.paging(wiseSayingList,pageNum);
+        if (pageList.isEmpty()) {
+            System.out.println(pageNum+"번 페이지에는 명언이 없음");
+        } else {
+            System.out.println("========================");
+            pageList=wiseSayingService.reverOrder(pageList);
+            for(WiseSaying wiseSaying:pageList){
+                System.out.println(wiseSaying);
+            }
+        }
+    }
 }

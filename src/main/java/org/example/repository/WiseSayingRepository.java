@@ -1,7 +1,6 @@
 package org.example.repository;
 
 import org.example.entity.WiseSaying;
-import org.example.service.WiseSayingService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -159,5 +158,11 @@ public class WiseSayingRepository {
             }
         }
         return findList;
+    }
+
+    public List<WiseSaying> paging(List<WiseSaying> wiseSayingList, int pageNum, int start, int end) {
+        List<WiseSaying> list=
+                wiseSayingList.subList(start,end);
+        return list;
     }
 }
