@@ -32,18 +32,22 @@ public class App{
                 wiseSayingService.loadWiseSayings();
                 wiseSayingController.listQuote();
             } else if (command.startsWith("삭제?id=")) {
+                wiseSayingService.loadWiseSayings();
                 int id=Integer.parseInt(command.split("=")[1]);
                 wiseSayingController.deleteQuote(id);
                 wiseSayingService.loadWiseSayings();
             } else if (command.startsWith("수정?id=")) {
+                wiseSayingService.loadWiseSayings();
                 int id=Integer.parseInt(command.split("=")[1]);
                 wiseSayingController.modifyQuote(id);
                 wiseSayingService.loadWiseSayings();
             }else if(command.equals("빌드")){
+                wiseSayingService.loadWiseSayings();
                 wiseSayingController.build();
                 wiseSayingService.loadWiseSayings();
                 System.out.println("빌드 완료");
             } else if (command.equals("검색")) {  //목록?type=content&word=후
+                wiseSayingService.loadWiseSayings();
                 System.out.print("타입(content / author): ");
                 String type=scanner.nextLine().trim();
                 System.out.print("검색어: ");
@@ -51,6 +55,7 @@ public class App{
 
                 wiseSayingController.search(type,word);
             } else if(command.startsWith("목록?")){
+                wiseSayingService.loadWiseSayings();
                 String[] param=command.split("\\?");
                 if(!param[1].split("=")[0].equals("page")){
                     System.out.println("유효하지 않은 명령");

@@ -118,8 +118,21 @@ public class WiseSayingController {
             for(WiseSaying wiseSaying:pageList){
                 System.out.println(wiseSaying);
             }
+
             int totalPages=(int)Math.ceil((double) wiseSayingList.size()/5);
-            System.out.println("페이지 : [" + pageNum + "] / " + totalPages);
+            System.out.print("페이지 : ");
+            for(int i=1; i<=totalPages;i++){
+                if(i==pageNum){
+                    System.out.print("["+i+"]");
+                }else{
+                    System.out.print(" "+i);
+                }
+                if(i<totalPages){
+                    System.out.print(" / ");
+                }
+            }
+            System.out.println("");
+
         }
     }
 }
