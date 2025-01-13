@@ -14,7 +14,7 @@ public class App{
         this.wiseSayingService=wiseSayingService;
     }
 
-    public void run() throws IOException, IllegalAccessException {
+    public void run() throws IOException{
 
         Scanner scanner = new Scanner(System.in);
         while(true) {
@@ -30,7 +30,7 @@ public class App{
                 break;
             } else if (command.equals("목록")) {
                 wiseSayingService.loadWiseSayings();
-                wiseSayingController.listQuote();
+                wiseSayingController.paging(1);
             } else if (command.startsWith("삭제?id=")) {
                 wiseSayingService.loadWiseSayings();
                 int id=Integer.parseInt(command.split("=")[1]);

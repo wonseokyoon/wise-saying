@@ -9,7 +9,6 @@ import java.util.List;
 
 public class WiseSayingService {
     static WiseSayingRepository wiseSayingRepository=new WiseSayingRepository();
-    private static final String path="db/wiseSaying";
 
     public List<WiseSaying> loadWiseSayings(){
         return wiseSayingRepository.loadWiseSayings();
@@ -43,9 +42,6 @@ public class WiseSayingService {
         wiseSayingRepository.build(wiseSayingList);
     }
 
-    public static void saveLastId(int id) throws IOException {
-        wiseSayingRepository.saveLastId(id);
-    }
     public void saveToFile(WiseSaying wiseSaying) {
         wiseSayingRepository.saveToFile(wiseSaying);
     }
@@ -81,7 +77,5 @@ public class WiseSayingService {
         else{
             return wiseSayingRepository.paging(wiseSayingList,start,end);
         }
-
-
     }
 }

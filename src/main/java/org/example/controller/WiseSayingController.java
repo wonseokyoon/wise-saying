@@ -2,18 +2,13 @@ package org.example.controller;
 
 import org.example.entity.WiseSaying;
 import org.example.service.WiseSayingService;
-
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
     private WiseSayingService wiseSayingService;
     private Scanner scanner;
-    private static final String path="db/wiseSaying";
     public WiseSayingController (WiseSayingService wiseSayingService){
         this.wiseSayingService=wiseSayingService;
         this.scanner=new Scanner(System.in);
@@ -29,20 +24,6 @@ public class WiseSayingController {
         int id = wiseSayingService.register(text,author);
         System.out.println(id+"번 명언이 등록되었습니다.");
 
-    }
-
-    public void listQuote(){
-        List<WiseSaying> wiseSayingList=wiseSayingService.findAll();
-
-        if (wiseSayingList.isEmpty()) {
-            System.out.println("등록된 명언이 없음");
-        } else {
-            System.out.println("========================");
-            wiseSayingList=wiseSayingService.reverOrder(wiseSayingList);
-            for(WiseSaying wiseSaying:wiseSayingList){
-                System.out.println(wiseSaying);
-            }
-        }
     }
 
     public void deleteQuote(int id){
@@ -109,6 +90,7 @@ public class WiseSayingController {
         List<WiseSaying> wiseSayingList= wiseSayingService.findAll();
         wiseSayingList=wiseSayingService.reverOrder(wiseSayingService.reverOrder(wiseSayingList));
 //        Collections.sort(wiseSayingList, Comparator.comparingInt(WiseSaying::getId));
+        if(pageNum==0) pageNum=1;
         List<WiseSaying> pageList=wiseSayingService.paging(wiseSayingList,pageNum);
         if (pageList.isEmpty()) {
             System.out.println(pageNum+"번 페이지에는 명언이 없음");
@@ -132,7 +114,6 @@ public class WiseSayingController {
                 }
             }
             System.out.println("");
-
         }
     }
 }
