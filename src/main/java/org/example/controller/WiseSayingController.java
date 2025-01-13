@@ -6,6 +6,7 @@ import org.example.service.WiseSayingService;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -106,6 +107,8 @@ public class WiseSayingController {
 
     public void paging(int pageNum) {
         List<WiseSaying> wiseSayingList= wiseSayingService.findAll();
+        wiseSayingList=wiseSayingService.reverOrder(wiseSayingService.reverOrder(wiseSayingList));
+//        Collections.sort(wiseSayingList, Comparator.comparingInt(WiseSaying::getId));
         List<WiseSaying> pageList=wiseSayingService.paging(wiseSayingList,pageNum);
         if (pageList.isEmpty()) {
             System.out.println(pageNum+"번 페이지에는 명언이 없음");
@@ -115,6 +118,8 @@ public class WiseSayingController {
             for(WiseSaying wiseSaying:pageList){
                 System.out.println(wiseSaying);
             }
+            int totalPages=(int)Math.ceil((double) wiseSayingList.size()/5);
+            System.out.println("페이지 : [" + pageNum + "] / " + totalPages);
         }
     }
 }

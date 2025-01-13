@@ -67,8 +67,8 @@ public class WiseSayingService {
 
     public List<WiseSaying> paging(List<WiseSaying> wiseSayingList, int pageNum) {
         int pageSize=5;
-        int start=(pageNum-1)*pageSize+1;
-        int end=Math.min(start+pageSize-1
+        int start=(pageNum-1)*pageSize;
+        int end=Math.min(start+pageSize
         ,wiseSayingList.size());
 
         //1. pageNum=0 or null
@@ -76,10 +76,10 @@ public class WiseSayingService {
             return paging(wiseSayingList,1);
         }
         else if(start>wiseSayingList.size()){
-            return null;
+            return Collections.emptyList();
         }
         else{
-            return wiseSayingRepository.paging(wiseSayingList,pageNum,start,end);
+            return wiseSayingRepository.paging(wiseSayingList,start,end);
         }
 
 

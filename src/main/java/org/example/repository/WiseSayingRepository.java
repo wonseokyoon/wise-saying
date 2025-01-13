@@ -160,7 +160,7 @@ public class WiseSayingRepository {
         return findList;
     }
 
-    public List<WiseSaying> paging(List<WiseSaying> wiseSayingList, int pageNum, int start, int end) {
+    public List<WiseSaying> paging(List<WiseSaying> wiseSayingList, int start, int end) {
         List<WiseSaying> list=
                 wiseSayingList.subList(start,end);
         return list;
